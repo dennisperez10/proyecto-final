@@ -4,3 +4,5 @@ pandas
 folium
 mapclassify
 numpy
+streamlit.folium
+geopandas
