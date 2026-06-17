@@ -32,8 +32,6 @@ canton_seleccionado = st.sidebar.selectbox(
     opciones_cantones
 )
 
-st.write(canton_seleccionado)
-
 if canton_seleccionado == 'Todos':
     geomorfositios_filtrado = geomorfositios.copy()
 else:
@@ -204,13 +202,22 @@ conteo_mapa_web["geometry"] = (
     )
 )
 
+# Filtrar la capa del mapa
+
+if canton_seleccionado == 'Todos':
+    conteo_filtrado = conteo_mapa_web.copy()
+else:
+    conteo_filtrado = conteo_mapa_web[
+        conteo_mapa_web['canton'] == canton_seleccionado
+    ]
+
 # Crear un mapa de Costa Rica con el conteo de geomorfositios por cantón
 m = folium.Map(location=[9.9, -84.0], zoom_start=8, tiles="CartoDB positron")
 
 # Agregar el mapa de coropletas
 choropleth = folium.Choropleth(
-    geo_data=conteo_mapa_web,               # capa de geometrías (polígonos de cantones)
-    data=conteo_mapa_web,                 # tabla de datos
+    geo_data=conteo_filtrado,               # capa de geometrías (polígonos de cantones)
+    data=conteo_filtrado,                 # tabla de datos
     columns=["canton", "cantidad_geomorfositios"],  # columnas: clave de unión y valor
     key_on="feature.properties.canton",    # atributo de las geometrías para la unión
     fill_color="Reds",               # paleta de colores
@@ -230,7 +237,7 @@ for key in list(choropleth._children):
 
 # Tooltip
 folium.GeoJson(
-    conteo_mapa_web,
+    conteo_filtrado,
     tooltip=folium.GeoJsonTooltip(
         fields=["canton", "cantidad_geomorfositios"],
         aliases=["Cantón:", "Cantidad de geomorfositios:"]
