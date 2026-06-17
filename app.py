@@ -19,6 +19,27 @@ def cargar_datos():
 
 geomorfositios = cargar_datos()
 
+# FILTRO
+
+lista_cantones = sorted(
+    geomorfositios['Canton'].dropna().unique().tolist()
+)
+
+opciones_cantones = ['Todos'] + lista_cantones
+
+canton_seleccionado = st.sidebar.selectbox(
+    'Seleccione un cantón',
+    opciones_cantones
+)
+
+st.write(canton_seleccionado)
+
+if canton_seleccionado == 'Todos':
+    geomorfositios_filtrado = geomorfositios.copy()
+else:
+    geomorfositios_filtrado = geomorfositios[
+        geomorfositios['Canton'] == canton_seleccionado
+    ]
 
 #   TITULO DE LA APLICACION
 st.title("Análisis de geomorfositios en Costa Rica")
@@ -39,10 +60,10 @@ st.write("Cabe destacar que no hay un geomorfositio que sea igual a otro. Podrá
 
 #   GRÁFICO DE GEOMORFOSITIOS POR ASP
 # Conteo de geomorfositios por ASP
-geomorfositios_suma = geomorfositios.groupby('AreaProtegida').count()
+geomorfositios_suma = geomorfositios_filtrado.groupby('AreaProtegida').count()
 
 # Suma de geomorfositios por ASP
-geomorfositios_suma = geomorfositios.groupby('AreaProtegida').size().reset_index(name='Cantidad')
+geomorfositios_suma = geomorfositios_filtrado.groupby('AreaProtegida').size().reset_index(name='Cantidad')
 
 #Ordenar de mayor a menor
 geomorfositios_suma = geomorfositios_suma.sort_values(by='Cantidad', ascending=False)
@@ -64,7 +85,7 @@ st.write ("El gráfico anterior muestra que se han identificado geomorfositios e
 
 #   GRÁFICO DE CLASIFICACIÓN DE GEOMORFOSITIOS
 # Conteo de geomorfositios por clasificación
-geomorfositios_clase = geomorfositios.groupby('Clasificacion').size().reset_index(name='Cantidad')
+geomorfositios_clase = geomorfositios_filtrado.groupby('Clasificacion').size().reset_index(name='Cantidad')
 
 # Crear gráfico circular
 fig = px.pie(
@@ -97,7 +118,7 @@ st.write("De tal manera, se registra que hay un 44.6% de geomorfositios con cate
 
 #   GRÁFICO DE DISPERSIÓN POR VALORES DE GEOMORFOSITIO
 # Selección de columnas
-geomorfositios_seleccionados = geomorfositios[['Codigo', 'ValoresCientificos', 'ValoresAnadidos']]
+geomorfositios_seleccionados = geomorfositios_filtrado[['Codigo', 'ValoresCientificos', 'ValoresAnadidos']]
 
 # Creación del gráfico de dispersión
 fig = px.scatter(
