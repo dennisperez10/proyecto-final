@@ -56,6 +56,10 @@ st.write("Cabe destacar que no hay un geomorfositio que sea igual a otro. Podrá
 # Mostrar una tabla con los datos
 #st.dataframe(geomorfositios, use_container_width=True, hide_index=True)
 
+# Suma de geomorfositios por cantón
+geomorfositios_suma = geomorfositios.groupby('AreaProtegida').count()
+st.dataframe(geomorfositios_suma)
+
 #   GRÁFICO DE GEOMORFOSITIOS POR ASP
 # Conteo de geomorfositios por ASP
 geomorfositios_suma = geomorfositios_filtrado.groupby('AreaProtegida').count()
@@ -112,7 +116,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 #   DESCRIPCIÓN DEL GRÁFICO CIRCULAR
 st.write("Con el inventario de geomorfositios se verifica que cada investigación utilizó una metodología de valoración diseñada por el equipo de trabajo de Reynard et al. (2016), la cual consiste en dos valoraciones distintas con sus respectivos puntos a evaluar sobre valores científicos y valores añadidos. De acuerdo con los valores obtenidos se realizó una clasificación propuesta por Bouzekraoui et al(2017) quien establece tres categorías de valoración (alta, media y baja) de acuerdo el valor dado para sus valores científicos y añadidos.")
-st.write("De tal manera, se registra que hay un 44.6% de geomorfositios con categoría alta. Esto significa que son geomorfositios que han obtenido valores altos en sus valores científicos y añadidos. Significando que son geomorfositios representativos por tratarse de lugares siniguales en el país. Mientras que un 33,8% de los geomorfositios entran en la categoría baja, siendo estos sitios poco representativos por existir varios de estos que son similares entre sí. Mientras que un 21,5% de los geomorfositios poseen categoría media, siendo estos geomorfositios que no tienen el mismo nivel de relevancia de los geomorfositios más representativos del área de estudio.")
+st.write("De tal manera, se registra que hay un 44.6% de geomorfositios con categoría alta. Esto significa que son geomorfositios que han obtenido valores altos en sus valores científicos y añadidos. Significando que son geomorfositios representativos por tratarse de lugares únicos en el país. Mientras que un 33,8% de los geomorfositios entran en la categoría baja, siendo estos sitios poco representativos por existir varios de estos que son similares entre sí. Mientras que un 21,5% de los geomorfositios poseen categoría media, siendo estos geomorfositios que no tienen el mismo nivel de relevancia de los geomorfositios más representativos del área de estudio.")
 
 #   GRÁFICO DE DISPERSIÓN POR VALORES DE GEOMORFOSITIO
 # Selección de columnas
@@ -167,7 +171,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 #   DESCRIPCIÓN DEL GRÁFICO DE DISPERSIÓN
 st.write("Por otra parte, el diagrama de dispersión anterior muestra la comparación entre los valores científicos y valores añadidos. Donde entre más alto a la derecha se localiza un punto del gráfico simboliza que es un geomorfositio de gran relevancia. En este caso se observa que hay un gran número de puntos en la esquina inferior izquierda, siendo estos geomorfositios que tienen poca relevancia. No obstante, entre los geomorfositios más relevantes destacan dos en la esquina superior derecha. Estos son los geomorfositios IRAvol001 y PVAvol001, siendo estos los cráteres de los volcanes Irazú y Poás respectivamente.")
-st.write("La razón de obtener valores altos podría tratarse por ser de los lugares más visitados a nivel nacional y ser lugares con los que la población se llega a sentir identificada dandoles un valor y sentido de pertenencia. Es probable que hayan otros geomorfositios tengan características similares pero no tienen el mismo nivel de relevancia que estos geomorfositios en concreto.")
+st.write("La razón de obtener valores altos podría tratarse por ser de los lugares más visitados a nivel nacional y ser lugares con los que la población se llega a sentir identificada dandoles un valor y sentido de pertenencia. Es probable que existan otros geomorfositios que posean características similares, pero no tienen el mismo nivel de relevancia que estos geomorfositios en concreto.")
 st.write("La importancia de un gráfico de dispersión como este permite validar e identificar cuales geomorfositios tienen más relevancia. En el caso de este trabajo da un panorama que permite conocer el estado y representatividad que tienen los geomorfositios a nivel local. Por tal razón, es que se hace evidente la necesidad de que existan herramientas que expongan al público todo lo relacionado con geomorfositios en el país.")
 
 
@@ -329,3 +333,12 @@ st_folium(
     width='stretch',
     height=700
 )
+
+st.write("Previamente se hizo mención y análisis de la localización de los geomorfositios en Costa Rica. Sin embargo, no se puede dejar de lado la mención exacta de donde se encuentran estos en el país. En la zona sur del país hay una gran concentración, destacando que es en el cantón de Coto Brus donde hay mayor presencia de geomorfositios con un total de 30.")
+st.write("Seguidamente, los cantones de **Pérez Zeledón** y **Oreamuno** poseen ocho geomorfositios. **Limón** y **Sarchí** poseen tres geomorfositios, mientras que los **Cartago**, **Turrialba**, **Talamanca**, **Buenos Aires** poseen dos geomorfositios, y cierran la cuenta con un solo geomorfositio los cantones de **Paraíso**, **Vázquez de Coronado**, **Poás**, **Río Cuarto** y **La Cruz**.")
+st.markdown("""
+Hay que hacer algunas aclaraciones con fines de evitar confusiones. 
+1. Todos los geomorfositios estudiados se localizan en áreas montañosas y volcánicas. La única excepción es Península de Santa Elena que se encuentra en áreas costeras. No obstante, la coordenadas no corresponden a un área cercana a las costas. 
+2. Cantones costeros como Limón o Talamanca se enumeran como cantones donde hay geomorfositios identificados. Sin embargo, estos se localizan en áreas montañosas. Estos cantones forman parte del Parque Nacional Chirripó, área protegida donde los geomorfositios fueron identificados. Por tal razón sigue en pie la afirmación de que no hay geomorfositios en áreas costeras. 
+3. Los estudios e inventarios de geomorfositios en el país son recientes y hace falta profundizar más en este tema. No quiere decir que los acá mostrados son los únicos existentes. Además, hay muchas metodologías de evaluación, por lo que es probable que alguno de los geomorfositios ya enumerados en este trabajo pueda aparecer en otros trabajos sobre geomorfositios en Costa Rica.
+""")
