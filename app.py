@@ -57,8 +57,10 @@ st.write("Cabe destacar que no hay un geomorfositio que sea igual a otro. Podrá
 #st.dataframe(geomorfositios, use_container_width=True, hide_index=True)
 
 # Suma de geomorfositios por cantón
-geomorfositios_suma = geomorfositios.groupby('AreaProtegida').count()
+geomorfositios_suma = (geomorfositios.groupby('ProcesoGeomorfólogicoPrincipal').size().reset_index(name='Cantidad')).sort_values(by='Cantidad', ascending=False)
 st.dataframe(geomorfositios_suma)
+
+st.write("De acuerdo con la tabla anterior, en las investigaciones realizadas identificando geomorfositios los procesos geomorfológicos dominantes en estas formaciones son los procesos fluviales y volcánicos. No obstante, puede haber otros procesos que intevienen en la modificación del relieve de cada geomorfositio.")
 
 #   GRÁFICO DE GEOMORFOSITIOS POR ASP
 # Conteo de geomorfositios por ASP
